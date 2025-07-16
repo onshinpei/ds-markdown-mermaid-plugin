@@ -38,7 +38,7 @@ graph TD
     <ConfigProvider mermaidConfig={mermaidConfig}>
       <div className="markdown-example">
         <div className="markdown-container">
-          <Markdown interval={16} plugins={[plugin]} timerType="setTimeout">
+          <Markdown interval={30} plugins={[plugin]} timerType="setTimeout">
             {markdownContent}
           </Markdown>
         </div>

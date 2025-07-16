@@ -16,7 +16,7 @@ export const rehypeMermaid: Plugin<[RehypeMermaidOptions?]> = (options = {}) => 
       if (node.tagName === 'pre' && node.children && node.children.length > 0 && node.children[0].tagName === 'code') {
         const codeNode = node.children[0];
         const className = codeNode.properties?.className || [];
-
+        // console.log(codeNode);
         // 检查是否包含mermaid语言标识
         if (className.some((cls: string) => cls.includes('language-mermaid'))) {
           const code = codeNode.children?.[0]?.value || '';

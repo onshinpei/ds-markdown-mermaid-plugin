@@ -6,7 +6,7 @@ const plugin = createBuildInPlugin({
   id: mermaidId,
   rehypePlugin: [rehypeMermaid],
   components: {
-    MermaidBlock,
+    MermaidBlock: MermaidBlock as any,
   },
 });
 
