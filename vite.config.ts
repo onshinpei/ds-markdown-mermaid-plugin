@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
     sourcemapIgnoreList: false, // 禁用忽略 node_modules 的源码映射
   },

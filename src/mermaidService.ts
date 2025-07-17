@@ -52,14 +52,21 @@ class MermaidService {
   /**
    * 渲染 mermaid 图表
    * @param id 图表ID
-   * @param chart mermaid 代码
+   * @param code mermaid 代码
    * @returns Promise<{ svg: string }>
    */
-  public async render(id: string, chart: string): Promise<{ svg: string }> {
-    if (!this.isInitialized) {
-      await this.initialize();
-    }
-    return mermaid.render(id, chart);
+  public async render(id: string, code: string): Promise<{ svg: string }> {
+    // if (!this.isInitialized) {
+    //   await this.initialize();
+    // }
+    mermaid.initialize({
+      theme: 'default',
+    });
+    return mermaid.render(id, code);
+  }
+
+  public async parse(code: string) {
+    return await mermaid.parse(code);
   }
 
   /**

@@ -5,15 +5,13 @@ import 'ds-markdown/style.css';
 
 const MarkdownExample: React.FC = () => {
   const markdownContent = `
-## 流程图示例
-
 \`\`\`mermaid
-graph TD
-    A[开始] --> B{判断条件}
-    B -->|是| C[处理A]
-    B -->|否| D[处理B]
-    C --> E[结束]
-    D --> E
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 \`\`\`
 `;
 
@@ -38,7 +36,7 @@ graph TD
     <ConfigProvider mermaidConfig={mermaidConfig}>
       <div className="markdown-example">
         <div className="markdown-container">
-          <Markdown interval={30} plugins={[plugin]} timerType="setTimeout">
+          <Markdown interval={100} plugins={[plugin]} timerType="setTimeout" disableTyping={false}>
             {markdownContent}
           </Markdown>
         </div>

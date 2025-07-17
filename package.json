@@ -40,9 +40,11 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "@types/lodash-es": "^4.17.12",
     "ds-markdown": "0.1.9-beta.2",
     "hast-util-to-jsx-runtime": "^2.3.6",
-    "mermaid": "^10.6.1",
+    "lodash-es": "^4.17.21",
+    "mermaid": "^11.9.0",
     "rehype-parse": "^9.0.1",
     "rehype-stringify": "^10.0.1",
     "unified": "^11.0.0",
