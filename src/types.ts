@@ -5,8 +5,6 @@ export interface MermaidProps {
   code: string;
   /** Mermaid配置选项 */
   mermaidConfig?: MermaidConfig;
-  /** 图表ID，如果不提供会自动生成 */
-  id?: string;
   /** 自定义CSS类名 */
   className?: string;
   /** 自定义样式 */

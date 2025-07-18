@@ -1,0 +1,6 @@
+/* #dmermaid-xxx 的样式 */
+
+[id^='dmermaid-'] {
+  height: 0;
+  overflow: hidden;
+}

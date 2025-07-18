@@ -1,6 +1,7 @@
 /* Example 页面样式 */
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -297,4 +298,4 @@ html, body {
   .markdown-container h2 {
     font-size: 1.25rem;
   }
-} 
+}
