@@ -4,3 +4,11 @@
   height: 0;
   overflow: hidden;
 }
+
+.ds-button.ds-icon-button {
+  padding: 0 4px;
+}
+
+.ds-button.ds-icon-button .ds-button__icon {
+  margin-right: 0;
+}
