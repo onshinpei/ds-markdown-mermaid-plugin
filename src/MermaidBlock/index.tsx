@@ -34,7 +34,12 @@ const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
         </>
       }
     >
-      {activeSegmented === 'mermaid' ? <RenderGraph code={code} ref={renderGraphRef} /> : <RenderCode code={code} />}
+      <div style={{ display: activeSegmented === 'mermaid' ? 'block' : 'none' }}>
+        <RenderGraph code={code} ref={renderGraphRef} />
+      </div>
+      <div style={{ display: activeSegmented === 'code' ? 'block' : 'none' }}>
+        <RenderCode code={code} />
+      </div>
     </CodeBlockWrap>
   );
 };
