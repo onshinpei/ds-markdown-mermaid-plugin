@@ -1,9 +1,10 @@
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
+import type { MermaidConfig } from 'mermaid';
 
 export interface RehypeMermaidOptions {
   /** 自定义mermaid配置 */
-  mermaidConfig?: any;
+  mermaidConfig?: MermaidConfig;
 }
 
 /**
@@ -11,12 +12,11 @@ export interface RehypeMermaidOptions {
  */
 export const rehypeMermaid: Plugin<[RehypeMermaidOptions?]> = (options = {}) => {
   return (tree) => {
-    visit(tree, 'element', (node: any, index: number, parent: any) => {
+    visit(tree, 'element', (node, index: number, parent: any) => {
       // 检查是否是mermaid代码块
       if (node.tagName === 'pre' && node.children && node.children.length > 0 && node.children[0].tagName === 'code') {
         const codeNode = node.children[0];
         const className = codeNode.properties?.className || [];
-        // console.log(codeNode);
         // 检查是否包含mermaid语言标识
         if (className.some((cls: string) => cls.includes('language-mermaid'))) {
           const code = codeNode.children?.[0]?.value || '';

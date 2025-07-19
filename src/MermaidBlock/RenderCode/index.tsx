@@ -1,12 +1,13 @@
 import React from 'react';
+import { HighlightCode } from 'ds-markdown';
 
 interface RenderCodeProps {
-    id?: number;
+  code: string;
 }
 
-const modulePrefix = 'RenderCode';
 const RenderCode: React.FC<RenderCodeProps> = (props: RenderCodeProps) => {
-    return (<div className={modulePrefix}>1</div>);
+  const { code } = props;
+  return <HighlightCode code={code} language="mermaid" />;
 };
 
 export default RenderCode;

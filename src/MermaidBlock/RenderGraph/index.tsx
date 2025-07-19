@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState } from 'react';
 import MermaidService from '../../mermaidService';
 import { useConfig } from 'ds-markdown';
 import { unified } from 'unified';
@@ -16,7 +16,11 @@ interface RenderGraphProps {
   code: string;
 }
 
-const RenderGraph: React.FC<RenderGraphProps> = ({ code }) => {
+export interface RenderGraphRef {
+  update: (code: string) => void;
+}
+
+const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,11 +98,19 @@ const RenderGraph: React.FC<RenderGraphProps> = ({ code }) => {
     renderChart();
   }, [code]);
 
+  useImperativeHandle(ref, () => ({
+    update: (code: string) => {
+      console.log('update', code);
+    },
+  }));
+
   return (
     <div className={`react-markdown-mermaid`}>
       <div className="react-markdown-mermaid__instance">{svgElement}</div>
     </div>
   );
-};
+});
 
-export default memo(RenderGraph);
+const RenderGraph = memo(RenderGraphInner);
+
+export default RenderGraph;
