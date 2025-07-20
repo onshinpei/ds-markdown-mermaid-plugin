@@ -1,9 +1,8 @@
 import React, { memo, useRef, useState } from 'react';
 import { MermaidProps } from '../types';
-import { CodeBlockWrap, CodeBlockActions, HighlightCode, useLocale } from 'ds-markdown';
+import { CodeBlockWrap, CodeBlockActions, HighlightCode, useLocale, Segmented } from 'ds-markdown';
 import RenderGraph, { RenderGraphRef } from './RenderGraph';
 import RenderCode from './RenderCode';
-import Segmented from './components/Segmented';
 import MermaidBlockActions from './components/MermaidBlockActions';
 
 const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
