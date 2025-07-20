@@ -5,7 +5,7 @@ const { dts } = require('rollup-plugin-dts');
 
 const packageJson = require('./package.json');
 
-const external = ['react', 'react-dom', 'mermaid', 'unified', 'unist-util-visit', 'react/jsx-runtime'];
+const external = ['react', 'react-dom', 'mermaid', 'unified', 'unist-util-visit', 'react/jsx-runtime', 'ds-markdown', 'hast-util-to-jsx-runtime', 'lodash-es', 'rehype-parse'];
 
 module.exports = [
   // 主包构建
