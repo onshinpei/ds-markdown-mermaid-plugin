@@ -1,7 +1,6 @@
 import React, { memo, useRef, useState } from 'react';
 import { MermaidProps } from '../types';
-import { CodeBlockWrap, CodeBlockActions, HighlightCode } from 'ds-markdown';
-import { MermaidConfig } from 'mermaid';
+import { CodeBlockWrap, CodeBlockActions, HighlightCode, useLocale } from 'ds-markdown';
 import RenderGraph, { RenderGraphRef } from './RenderGraph';
 import RenderCode from './RenderCode';
 import Segmented from './components/Segmented';
@@ -10,6 +9,7 @@ import MermaidBlockActions from './components/MermaidBlockActions';
 const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
   const [activeSegmented, setActiveSegmented] = useState('mermaid');
   const renderGraphRef = useRef<RenderGraphRef>(null);
+  const locale = useLocale();
   return (
     <CodeBlockWrap
       title={
@@ -17,20 +17,19 @@ const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
           <Segmented
             Segmented={[
               {
-                label: '图表',
+                label: locale.mermaid.diagram || 'Diagram',
                 value: 'mermaid',
               },
               {
-                label: '代码',
+                label: locale.mermaid.code || 'Code',
                 value: 'code',
               },
             ]}
             value={activeSegmented}
             onChange={(value: string) => setActiveSegmented(value)}
           />
-          {activeSegmented === 'mermaid' ? <MermaidBlockActions /> : <CodeBlockActions codeContent={code} language="mermaid" />}
-          {/* <div>aaass</div>
-          <CodeBlockActions codeContent={code} language="mermaid" /> */}
+          {/* {activeSegmented === 'mermaid' ? <MermaidBlockActions /> : <CodeBlockActions codeContent={code} language="mermaid" />} */}
+          {activeSegmented === 'mermaid' ? null : <CodeBlockActions codeContent={code} language="mermaid" />}
         </>
       }
     >

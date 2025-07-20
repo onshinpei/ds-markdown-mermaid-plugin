@@ -27,6 +27,8 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
 
+  console.log(mermaidConfig);
+
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
   mermaidConfigRef.current = mermaidConfig;

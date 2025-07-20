@@ -27,26 +27,14 @@ flowchart TD
 
   // 配置mermaid
   const mermaidConfig = {
-    theme: 'default',
-    flowchart: {
-      useMaxWidth: true,
-      htmlLabels: true,
-    },
-    sequence: {
-      useMaxWidth: true,
-      diagramMarginX: 50,
-      diagramMarginY: 10,
-    },
-    gantt: {
-      useMaxWidth: true,
-    },
+    theme: 'dark',
   };
 
   return (
-    <ConfigProvider mermaidConfig={mermaidConfig}>
+    <ConfigProvider mermaidConfig={mermaidConfig} locale={en}>
       <div className="markdown-example">
         <div className="markdown-container">
-          <Markdown interval={160} plugins={[plugin]} timerType="setTimeout" disableTyping={false}>
+          <Markdown interval={16} plugins={[plugin]} timerType="setTimeout" disableTyping={false} theme="dark">
             {markdownContent}
           </Markdown>
         </div>
