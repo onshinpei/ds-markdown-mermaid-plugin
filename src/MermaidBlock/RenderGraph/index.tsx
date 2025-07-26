@@ -5,8 +5,8 @@ import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
-import uniqueID from 'lodash-es/uniqueId';
 import { MermaidConfig } from 'mermaid';
+import { getMermaidId } from './util';
 
 const defaultConfig: MermaidConfig = {
   startOnLoad: false,
@@ -27,13 +27,12 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
 
-  console.log(mermaidConfig);
+  // console.log(mermaidConfig);
 
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
   mermaidConfigRef.current = mermaidConfig;
 
-  // 生成唯一ID
   // 获取 mermaid 服务实例
   const mermaidService = MermaidService.getInstance();
 
@@ -49,7 +48,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
     };
 
     initMermaid();
-  }, []);
+  }, [mermaidConfig.theme]);
 
   const parseSvgToJsx = useCallback((svgString: string) => {
     if (!svgString) return null;
@@ -81,10 +80,14 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
     setError(null);
 
     const renderChart = async () => {
-      const chartId = uniqueID('mermaid-');
+      // 生成唯一ID
+      const viewID = getMermaidId();
       try {
         await mermaidService.parse(code);
-        const { svg } = await mermaidService.render(chartId, code);
+        const { svg } = await mermaidService.render(viewID, code);
+        let graphDiv = document.querySelector<SVGSVGElement>(`#${viewID}`);
+        console.log(graphDiv);
+        debugger;
         const svgElement = parseSvgToJsx(svg);
         if (!svgElement) {
           return;

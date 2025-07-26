@@ -27,8 +27,7 @@ const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
             value={activeSegmented}
             onChange={(value: string) => setActiveSegmented(value)}
           />
-          {/* {activeSegmented === 'mermaid' ? <MermaidBlockActions /> : <CodeBlockActions codeContent={code} language="mermaid" />} */}
-          {activeSegmented === 'mermaid' ? null : <CodeBlockActions codeContent={code} language="mermaid" />}
+          {activeSegmented === 'mermaid' ? <MermaidBlockActions graphRef={renderGraphRef} /> : <CodeBlockActions codeContent={code} language="mermaid" />}
         </>
       }
     >
