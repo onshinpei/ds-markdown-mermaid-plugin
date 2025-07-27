@@ -1,18 +1,22 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import { MermaidProps } from '../types';
 import { CodeBlockWrap, CodeBlockActions, HighlightCode, useLocale, Segmented } from 'ds-markdown';
 import RenderGraph, { RenderGraphRef } from './RenderGraph';
 import RenderCode from './RenderCode';
 import MermaidBlockActions from './components/MermaidBlockActions';
 import { GraphProvider } from './context';
+import { PanZoomState } from '../panZoomState';
 
 const MermaidBlock: React.FC<MermaidProps> = (props) => {
   const { code, isComplete = false } = props;
   const [activeSegmented, setActiveSegmented] = useState('mermaid');
   const renderGraphRef = useRef<RenderGraphRef>(null);
   const locale = useLocale();
+  const panZoomState = useMemo(() => {
+    return new PanZoomState();
+  }, []);
   return (
-    <GraphProvider isComplete={isComplete}>
+    <GraphProvider isComplete={isComplete} panZoomState={panZoomState}>
       <CodeBlockWrap
         title={
           <>

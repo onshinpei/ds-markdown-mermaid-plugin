@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState, useContext } from 'react';
 import MermaidService from '../../mermaidService';
 import { useConfig } from 'ds-markdown';
 import { unified } from 'unified';
@@ -8,6 +8,7 @@ import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { MermaidConfig } from 'mermaid';
 import { getMermaidId } from './util';
 import Svg from '../components/Svg';
+import GraphContext from '../context';
 
 const defaultConfig: MermaidConfig = {
   startOnLoad: false,
@@ -23,12 +24,12 @@ export interface RenderGraphRef {
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code, isComplete = true }, ref) => {
-  console.log('isComplete', isComplete);
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
+  const { panZoomState } = useContext(GraphContext);
 
   // console.log(mermaidConfig);
 
@@ -113,7 +114,14 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code, i
 
   return (
     <div className={`react-markdown-mermaid`}>
-      <div className="react-markdown-mermaid__instance">{svgElement}</div>
+      <div
+        className="react-markdown-mermaid__instance"
+        onDoubleClick={() => {
+          panZoomState.zoomIn();
+        }}
+      >
+        {svgElement}
+      </div>
     </div>
   );
 });

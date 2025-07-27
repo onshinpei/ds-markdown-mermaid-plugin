@@ -22,13 +22,18 @@ export class PanZoomState {
     });
   }
 
-  public updateElement(diagramView: SVGElement, { pan, zoom }: { pan: Point; zoom: number }) {
+  public updateElement(diagramView: SVGElement, config?: { pan: Point; zoom: number }) {
+    const { pan, zoom } = config || {};
     this.pzoom?.destroy();
     // let hammer: HammerManager | undefined;
     this.pzoom = panzoom(diagramView, {
       center: true,
+      panEnabled: true,
+      zoomEnabled: true,
       controlIconsEnabled: false,
-
+      dblClickZoomEnabled: true,
+      preventMouseEventsDefault: false,
+      mouseWheelZoomEnabled: false,
       fit: true,
       maxZoom: 12,
       minZoom: 0.2,
@@ -48,8 +53,6 @@ export class PanZoomState {
           this.onPanZoomChange?.(this.pan, this.zoom);
         }
       },
-      panEnabled: true,
-      zoomEnabled: true,
     });
 
     this.pzoom.disableDblClickZoom();
