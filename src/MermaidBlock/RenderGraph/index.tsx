@@ -15,13 +15,15 @@ const defaultConfig: MermaidConfig = {
 
 interface RenderGraphProps {
   code: string;
+  isComplete?: boolean;
 }
 
 export interface RenderGraphRef {
   update: (code: string) => void;
 }
 
-const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
+const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code, isComplete = true }, ref) => {
+  console.log('isComplete', isComplete);
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

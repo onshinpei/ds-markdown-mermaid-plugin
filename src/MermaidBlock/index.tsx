@@ -4,40 +4,44 @@ import { CodeBlockWrap, CodeBlockActions, HighlightCode, useLocale, Segmented } 
 import RenderGraph, { RenderGraphRef } from './RenderGraph';
 import RenderCode from './RenderCode';
 import MermaidBlockActions from './components/MermaidBlockActions';
+import { GraphProvider } from './context';
 
-const MermaidBlock: React.FC<MermaidProps> = ({ code }) => {
+const MermaidBlock: React.FC<MermaidProps> = (props) => {
+  const { code, isComplete = false } = props;
   const [activeSegmented, setActiveSegmented] = useState('mermaid');
   const renderGraphRef = useRef<RenderGraphRef>(null);
   const locale = useLocale();
   return (
-    <CodeBlockWrap
-      title={
-        <>
-          <Segmented
-            Segmented={[
-              {
-                label: locale.mermaid.diagram || 'Diagram',
-                value: 'mermaid',
-              },
-              {
-                label: locale.mermaid.code || 'Code',
-                value: 'code',
-              },
-            ]}
-            value={activeSegmented}
-            onChange={(value: string) => setActiveSegmented(value)}
-          />
-          {activeSegmented === 'mermaid' ? <MermaidBlockActions graphRef={renderGraphRef} /> : <CodeBlockActions codeContent={code} language="mermaid" />}
-        </>
-      }
-    >
-      <div style={{ display: activeSegmented === 'mermaid' ? 'block' : 'none' }}>
-        <RenderGraph code={code} ref={renderGraphRef} />
-      </div>
-      <div style={{ display: activeSegmented === 'code' ? 'block' : 'none' }}>
-        <RenderCode code={code} />
-      </div>
-    </CodeBlockWrap>
+    <GraphProvider isComplete={isComplete}>
+      <CodeBlockWrap
+        title={
+          <>
+            <Segmented
+              Segmented={[
+                {
+                  label: locale.mermaid.diagram || 'Diagram',
+                  value: 'mermaid',
+                },
+                {
+                  label: locale.mermaid.code || 'Code',
+                  value: 'code',
+                },
+              ]}
+              value={activeSegmented}
+              onChange={(value: string) => setActiveSegmented(value)}
+            />
+            {activeSegmented === 'mermaid' ? <MermaidBlockActions graphRef={renderGraphRef} /> : <CodeBlockActions codeContent={code} language="mermaid" />}
+          </>
+        }
+      >
+        <div style={{ display: activeSegmented === 'mermaid' ? 'block' : 'none' }}>
+          <RenderGraph code={code} isComplete={isComplete} ref={renderGraphRef} />
+        </div>
+        <div style={{ display: activeSegmented === 'code' ? 'block' : 'none' }}>
+          <RenderCode code={code} />
+        </div>
+      </CodeBlockWrap>
+    </GraphProvider>
   );
 };
 
