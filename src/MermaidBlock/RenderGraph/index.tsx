@@ -3,10 +3,11 @@ import MermaidService from '../../mermaidService';
 import { useConfig } from 'ds-markdown';
 import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
+import { toJsxRuntime, Components, ExtraProps } from 'hast-util-to-jsx-runtime';
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { MermaidConfig } from 'mermaid';
 import { getMermaidId } from './util';
+import Svg from '../components/Svg';
 
 const defaultConfig: MermaidConfig = {
   startOnLoad: false,
@@ -60,7 +61,9 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
         jsx,
         jsxs,
         passKeys: true, // 保留所有属性
-        components: {},
+        components: {
+          svg: Svg,
+        },
       });
       return jsxElement;
     } catch (err) {
@@ -85,9 +88,6 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
       try {
         await mermaidService.parse(code);
         const { svg } = await mermaidService.render(viewID, code);
-        let graphDiv = document.querySelector<SVGSVGElement>(`#${viewID}`);
-        console.log(graphDiv);
-        debugger;
         const svgElement = parseSvgToJsx(svg);
         if (!svgElement) {
           return;
