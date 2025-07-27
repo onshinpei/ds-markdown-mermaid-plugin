@@ -26,13 +26,13 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ graphRef }) =
 
   return (
     <div className="md-code-block-header-actions" style={{ gap: 0 }}>
-      <ToolTip title="缩小" style={{ marginRight: 8 }}>
+      <ToolTip title={locale.mermaid.zoomOut || 'Zoom Out'} style={{ marginRight: 8 }}>
         <IconButton icon={<DownScaleIcon size={24} />} onClick={zoomOut} />
       </ToolTip>
-      <ToolTip title="放大" style={{ marginRight: 8 }}>
+      <ToolTip title={locale.mermaid.zoomIn || 'Zoom In'} style={{ marginRight: 8 }}>
         <IconButton icon={<UpScaleIcon size={24} />} onClick={zoomIn} />
       </ToolTip>
-      <ToolTip title="全屏">
+      <ToolTip title={locale.mermaid.fullScreen || 'Full Screen'}>
         <IconButton icon={<FullScreenIcon size={24} />} onClick={fullScreen} />
       </ToolTip>
 
