@@ -7,7 +7,7 @@ type SvgProps = React.SVGProps<SVGSVGElement> & ExtraProps;
 const Svg: React.FC<SvgProps> = (props) => {
   const { style, ...rest } = props;
 
-  const { isComplete, panZoomState } = useContext(GraphContext);
+  const { isComplete, panZoomState, svgHeight } = useContext(GraphContext);
 
   const svgRef = useRef<SVGSVGElement>(null!);
 
@@ -24,7 +24,7 @@ const Svg: React.FC<SvgProps> = (props) => {
     };
   }, [isComplete]);
 
-  return <svg {...rest} width="100%" height="300" style={{ ...style, maxWidth: '100%' }} ref={svgRef} />;
+  return <svg {...rest} width="100%" height={svgHeight} style={{ ...style, maxWidth: '100%' }} ref={svgRef} />;
 };
 
 export default Svg;

@@ -16,7 +16,7 @@ const MermaidBlock: React.FC<MermaidProps> = (props) => {
     return new PanZoomState();
   }, []);
   return (
-    <GraphProvider isComplete={isComplete} panZoomState={panZoomState}>
+    <GraphProvider isComplete={isComplete} panZoomState={panZoomState} svgHeight={380}>
       <CodeBlockWrap
         title={
           <>
@@ -34,7 +34,7 @@ const MermaidBlock: React.FC<MermaidProps> = (props) => {
               value={activeSegmented}
               onChange={(value: string) => setActiveSegmented(value)}
             />
-            {activeSegmented === 'mermaid' ? <MermaidBlockActions graphRef={renderGraphRef} /> : <CodeBlockActions codeContent={code} language="mermaid" />}
+            {activeSegmented === 'mermaid' ? <MermaidBlockActions graphRef={renderGraphRef} code={code} /> : <CodeBlockActions codeContent={code} language="mermaid" />}
           </>
         }
       >

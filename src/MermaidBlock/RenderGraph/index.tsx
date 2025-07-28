@@ -23,13 +23,13 @@ export interface RenderGraphRef {
   update: (code: string) => void;
 }
 
-const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code, isComplete = true }, ref) => {
+const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
-  const { panZoomState } = useContext(GraphContext);
+  const { panZoomState, svgHeight } = useContext(GraphContext);
 
   // console.log(mermaidConfig);
 
@@ -118,6 +118,9 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code, i
         className="react-markdown-mermaid__instance"
         onDoubleClick={() => {
           panZoomState.zoomIn();
+        }}
+        style={{
+          height: svgHeight,
         }}
       >
         {svgElement}
