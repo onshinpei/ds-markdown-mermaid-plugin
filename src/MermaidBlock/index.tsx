@@ -13,7 +13,9 @@ const MermaidBlock: React.FC<MermaidProps> = (props) => {
   const renderGraphRef = useRef<RenderGraphRef>(null);
   const locale = useLocale();
   const panZoomState = useMemo(() => {
-    return new PanZoomState();
+    return new PanZoomState({
+      autoZoomOut: false, // 禁用自动缩放，保持原始大小
+    });
   }, []);
   return (
     <GraphProvider isComplete={isComplete} panZoomState={panZoomState} svgHeight={380}>

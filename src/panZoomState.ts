@@ -2,17 +2,24 @@ import type { Point } from 'mermaid/dist/types.js';
 import panzoom from 'svg-pan-zoom';
 type PanZoom = typeof panzoom;
 
+interface IOptions {
+  mouseWheelZoomEnabled?: boolean;
+  autoZoomOut?: boolean; // 新增：是否自动缩小以避免工具栏重叠
+}
+
 export class PanZoomState {
   private pan?: Point;
   private zoom?: number;
   private pzoom: PanZoom | undefined;
   private isDirty = false;
   private resizeObserver: ResizeObserver;
+  private mouseWheelZoomEnabled: boolean;
+  private autoZoomOut: boolean; // 新增：自动缩放配置
 
   public isPanEnabled: boolean;
   public onPanZoomChange?: (pan: Point, zoom: number) => void;
 
-  constructor() {
+  constructor(option?: IOptions) {
     this.isPanEnabled = true;
     this.resizeObserver = new ResizeObserver(() => {
       this.resize();
@@ -20,6 +27,8 @@ export class PanZoomState {
         this.reset();
       }
     });
+    this.mouseWheelZoomEnabled = option?.mouseWheelZoomEnabled || false;
+    this.autoZoomOut = option?.autoZoomOut ?? false; // 默认启用自动缩放
   }
 
   public updateElement(diagramView: SVGElement, config?: { pan: Point; zoom: number }) {
@@ -27,14 +36,15 @@ export class PanZoomState {
     this.pzoom?.destroy();
     // let hammer: HammerManager | undefined;
     this.pzoom = panzoom(diagramView, {
-      center: true,
+      center: false,
+      fit: false,
       panEnabled: true,
       zoomEnabled: true,
       controlIconsEnabled: false,
       dblClickZoomEnabled: true,
       preventMouseEventsDefault: false,
-      mouseWheelZoomEnabled: false,
-      fit: true,
+      mouseWheelZoomEnabled: this.mouseWheelZoomEnabled,
+
       maxZoom: 12,
       minZoom: 0.2,
       onPan: (pan) => {
@@ -107,8 +117,10 @@ export class PanZoomState {
 
   public reset() {
     this.pzoom?.reset();
-    // Zoom out a bit to avoid overlap with the toolbar
-    this.pzoom?.zoom(0.875);
+    // 根据配置决定是否自动缩放以避免工具栏重叠
+    if (this.autoZoomOut) {
+      this.pzoom?.zoom(0.875);
+    }
     this.isDirty = false;
   }
 }

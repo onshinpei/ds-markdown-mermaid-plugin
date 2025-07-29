@@ -25,13 +25,10 @@ export interface RenderGraphRef {
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
   const { panZoomState, svgHeight } = useContext(GraphContext);
-
-  // console.log(mermaidConfig);
 
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
@@ -78,13 +75,10 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   useEffect(() => {
     if (!code.trim()) {
       setSvgElement(null);
-      setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
     setError(null);
-
     const renderChart = async () => {
       // 生成唯一ID
       const viewID = getMermaidId();
@@ -99,8 +93,6 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to render mermaid chart';
         setError(errorMessage);
-      } finally {
-        setIsLoading(false);
       }
     };
     renderChart();
