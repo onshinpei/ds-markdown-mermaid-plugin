@@ -20,7 +20,8 @@ interface RenderGraphProps {
 }
 
 export interface RenderGraphRef {
-  update: (code: string) => void;
+  download: () => Promise<void>;
+  copy: () => Promise<void>;
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
@@ -29,6 +30,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
   const { panZoomState, svgHeight } = useContext(GraphContext);
+  const svgRef = useRef<SVGSVGElement | null>(null);
 
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
@@ -99,8 +101,11 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   }, [code]);
 
   useImperativeHandle(ref, () => ({
-    update: (code: string) => {
-      console.log('update', code);
+    download: async () => {
+      console.log('download');
+    },
+    copy: async () => {
+      console.log('copy');
     },
   }));
 

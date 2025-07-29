@@ -1,29 +1,22 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { GraphProvider } from '../../context';
 import { PanZoomState } from '../../../panZoomState';
-
 import { createPortal } from 'react-dom';
-import RenderGraph from '../../RenderGraph';
+import RenderGraph, { RenderGraphRef } from '../../RenderGraph';
 import Loading from '../Loading';
+import { Button } from 'ds-markdown';
+import { DownloadIcon, CopyIcon } from '../Icon';
 import './index.css';
 
 interface FullscreenProps {
   code: string;
+  onClose?: () => void;
 }
 
-const FullscreenModalInner: React.FC<FullscreenProps> = ({ code }) => {
-  return (
-    <div className="mermaid-fullscreen">
-      <div className="mermaid-fullscreen__header">aaa</div>
-      <div className="mermaid-fullscreen__content">
-        <RenderGraph code={code} isComplete={true} />
-      </div>
-    </div>
-  );
-};
-
-const FullscreenModal: React.FC<FullscreenProps> = (props: FullscreenProps) => {
+const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
   const [height, setHeight] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null!);
+  const renderGraphRef = useRef<RenderGraphRef>(null);
 
   const panZoomState = useMemo(() => {
     return new PanZoomState({
@@ -32,7 +25,7 @@ const FullscreenModal: React.FC<FullscreenProps> = (props: FullscreenProps) => {
   }, []);
 
   const listenResize = useCallback(() => {
-    setHeight(document.body.clientHeight);
+    setHeight(contentRef.current.clientHeight);
   }, []);
 
   useLayoutEffect(() => {
@@ -43,18 +36,46 @@ const FullscreenModal: React.FC<FullscreenProps> = (props: FullscreenProps) => {
     };
   }, []);
 
-  if (height === 0) {
-    return createPortal(
-      <div className="mermaid-fullscreen">
-        <Loading />
-      </div>,
-      document.body,
-    );
-  }
+  // 下载图片处理函数
+  const handleDownload = async () => {
+    if (renderGraphRef.current) {
+      try {
+        await renderGraphRef.current.download();
+      } catch (error) {
+        console.error('Download failed:', error);
+      }
+    }
+  };
+
+  // 复制图片处理函数
+  const handleCopy = async () => {
+    if (renderGraphRef.current) {
+      try {
+        await renderGraphRef.current.copy();
+      } catch (error) {
+        console.error('Copy failed:', error);
+      }
+    }
+  };
 
   const el = (
     <GraphProvider isComplete={true} panZoomState={panZoomState} svgHeight={height}>
-      <FullscreenModalInner code={props.code} />
+      <div className="ds-markdown mermaid-fullscreen">
+        <div className="mermaid-fullscreen__header">
+          <div className="mermaid-fullscreen__header-center">
+            <Button icon={<DownloadIcon size={24} />} onClick={handleDownload}>
+              下载图片
+            </Button>
+            <Button icon={<CopyIcon size={24} />} onClick={handleCopy}>
+              复制图片
+            </Button>
+          </div>
+          <div className="mermaid-fullscreen__header-right"></div>
+        </div>
+        <div className="mermaid-fullscreen__content" ref={contentRef}>
+          {height > 0 ? <RenderGraph code={code} isComplete={true} ref={renderGraphRef} /> : <Loading />}
+        </div>
+      </div>
     </GraphProvider>
   );
   return createPortal(el, document.body);
