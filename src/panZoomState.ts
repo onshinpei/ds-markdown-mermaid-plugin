@@ -22,6 +22,7 @@ export class PanZoomState {
   constructor(option?: IOptions) {
     this.isPanEnabled = true;
     this.resizeObserver = new ResizeObserver(() => {
+      console.log('resize');
       this.resize();
       if (!this.isDirty) {
         this.reset();
@@ -36,8 +37,8 @@ export class PanZoomState {
     this.pzoom?.destroy();
     // let hammer: HammerManager | undefined;
     this.pzoom = panzoom(diagramView, {
-      center: false,
-      fit: false,
+      center: true,
+      fit: true,
       panEnabled: true,
       zoomEnabled: true,
       controlIconsEnabled: false,
@@ -65,10 +66,8 @@ export class PanZoomState {
       },
     });
 
-    this.pzoom.disableDblClickZoom();
-
-    this.resizeObserver.disconnect();
-    this.resizeObserver.observe(diagramView);
+    // this.resizeObserver.disconnect();
+    // this.resizeObserver.observe(diagramView);
 
     if (pan && zoom && Number.isFinite(zoom) && Number.isFinite(pan.x) && Number.isFinite(pan.y)) {
       this.restorePanZoom(pan, zoom);
@@ -122,5 +121,9 @@ export class PanZoomState {
       this.pzoom?.zoom(0.875);
     }
     this.isDirty = false;
+  }
+
+  public getSizes() {
+    return this.pzoom?.getSizes();
   }
 }

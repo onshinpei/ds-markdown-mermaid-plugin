@@ -21,6 +21,7 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
   const panZoomState = useMemo(() => {
     return new PanZoomState({
       autoZoomOut: false, // 禁用自动缩放，保持原始大小
+      mouseWheelZoomEnabled: true,
     });
   }, []);
 

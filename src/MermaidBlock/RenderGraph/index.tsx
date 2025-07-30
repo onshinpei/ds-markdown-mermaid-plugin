@@ -9,6 +9,7 @@ import { MermaidConfig } from 'mermaid';
 import { getMermaidId } from './util';
 import Svg from '../components/Svg';
 import GraphContext from '../context';
+import { svgToPngAndCopy, downloadPng } from '../utils/svgUtil';
 
 const defaultConfig: MermaidConfig = {
   startOnLoad: false,
@@ -21,7 +22,7 @@ interface RenderGraphProps {
 
 export interface RenderGraphRef {
   download: () => Promise<void>;
-  copy: () => Promise<void>;
+  copy: () => Promise<any>;
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
@@ -29,8 +30,8 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   const [error, setError] = useState<string | null>(null);
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
-  const { panZoomState, svgHeight } = useContext(GraphContext);
-  const svgRef = useRef<SVGSVGElement | null>(null);
+  const { svgHeight, panZoomState } = useContext(GraphContext);
+  const svgIdRef = useRef('');
 
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
@@ -92,6 +93,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
           return;
         }
         setSvgElement(svgElement);
+        svgIdRef.current = `#${viewID}`;
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to render mermaid chart';
         setError(errorMessage);
@@ -102,10 +104,12 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
 
   useImperativeHandle(ref, () => ({
     download: async () => {
-      console.log('download');
+      const sizes = panZoomState.getSizes();
+      downloadPng({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
     },
     copy: async () => {
-      console.log('copy');
+      const sizes = panZoomState.getSizes();
+      return svgToPngAndCopy({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
     },
   }));
 
@@ -113,9 +117,6 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
     <div className={`react-markdown-mermaid`}>
       <div
         className="react-markdown-mermaid__instance"
-        onDoubleClick={() => {
-          panZoomState.zoomIn();
-        }}
         style={{
           height: svgHeight,
         }}
