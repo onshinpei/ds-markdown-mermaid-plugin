@@ -6,6 +6,8 @@ import RenderGraph, { RenderGraphRef } from '../../RenderGraph';
 import Loading from '../Loading';
 import { Button } from 'ds-markdown';
 import { DownloadIcon, CopyIcon } from '../Icon';
+import SuccessButton from '../SuccessButton';
+
 import './index.css';
 
 interface FullscreenProps {
@@ -40,22 +42,14 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
   // 下载图片处理函数
   const handleDownload = async () => {
     if (renderGraphRef.current) {
-      try {
-        await renderGraphRef.current.download();
-      } catch (error) {
-        console.error('Download failed:', error);
-      }
+      return renderGraphRef.current.download();
     }
   };
 
   // 复制图片处理函数
   const handleCopy = async () => {
     if (renderGraphRef.current) {
-      try {
-        await renderGraphRef.current.copy();
-      } catch (error) {
-        console.error('Copy failed:', error);
-      }
+      return renderGraphRef.current.copy();
     }
   };
 
@@ -64,12 +58,12 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
       <div className="ds-markdown mermaid-fullscreen">
         <div className="mermaid-fullscreen__header">
           <div className="mermaid-fullscreen__header-center">
-            <Button icon={<DownloadIcon size={24} />} onClick={handleDownload}>
+            <SuccessButton icon={<DownloadIcon size={24} />} onClick={handleDownload} executeText="已下载">
               下载图片
-            </Button>
-            <Button icon={<CopyIcon size={24} />} onClick={handleCopy}>
+            </SuccessButton>
+            <SuccessButton icon={<CopyIcon size={24} />} onClick={handleCopy} executeText="已复制">
               复制图片
-            </Button>
+            </SuccessButton>
           </div>
           <div className="mermaid-fullscreen__header-right"></div>
         </div>

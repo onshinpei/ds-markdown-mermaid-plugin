@@ -28,23 +28,25 @@ function svgToPng(svgElement: SVGElement, width: number, height: number, callbac
   img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 }
 
-const downloadPng = (data: { id: string; width: number; height: number }) => {
+const downloadPng = async (data: { id: string; width: number; height: number }) => {
   const { id, width, height } = data;
   const svgElement = document.querySelector(id) as SVGElement;
   if (!svgElement) {
-    return;
+    return false;
   }
-  svgToPng(svgElement, width, height, function (pngData) {
-    // 创建一个新的图片元素显示PNG
-    const img = new Image();
-    img.src = pngData;
-    document.body.appendChild(img);
+  return new Promise((resolve: (value: boolean) => void) => {
+    svgToPng(svgElement, width, height, function (pngData) {
+      // 创建一个新的图片元素显示PNG
+      const img = new Image();
+      img.src = pngData;
 
-    // 或者下载PNG
-    const link = document.createElement('a');
-    link.download = 'image.png';
-    link.href = pngData;
-    link.click();
+      // 或者下载PNG
+      const link = document.createElement('a');
+      link.download = 'image.png';
+      link.href = pngData;
+      link.click();
+      resolve(true);
+    });
   });
 };
 

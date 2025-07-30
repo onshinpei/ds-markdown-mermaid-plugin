@@ -21,8 +21,8 @@ interface RenderGraphProps {
 }
 
 export interface RenderGraphRef {
-  download: () => Promise<void>;
-  copy: () => Promise<any>;
+  download: () => Promise<boolean>;
+  copy: () => Promise<boolean>;
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
@@ -105,7 +105,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   useImperativeHandle(ref, () => ({
     download: async () => {
       const sizes = panZoomState.getSizes();
-      downloadPng({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
+      return downloadPng({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
     },
     copy: async () => {
       const sizes = panZoomState.getSizes();
