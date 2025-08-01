@@ -37,7 +37,7 @@
   "author": "Your Name",
   "license": "MIT",
   "peerDependencies": {
-    "ds-markdown": "^0.1.9",
+    "ds-markdown": "*",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
@@ -65,7 +65,7 @@
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.0.0",
     "cross-env": "^7.0.3",
-    "ds-markdown": "^0.1.9-beta.7",
+    "ds-markdown": "^0.1.10-beta.2",
     "ds-markdown-mermaid-plugin": "^0.0.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",

@@ -20,7 +20,7 @@ const ToolTip = forwardRef<TooltipRef, ToolTipProps>(({ title, children, positio
       overlay={title}
       mouseLeaveDelay={0}
       classNames={{
-        root: classNames('ds-markdown-tooltip', `ds-markdown-tooltip--${position}`, 'className'),
+        root: classNames('ds-markdown-tooltip', className),
       }}
       trigger={['hover', 'focus']}
       destroyOnHidden={false}
