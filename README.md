@@ -1,6 +1,6 @@
 # ds-markdown-mermaid-plugin
 
-一个为 [ds-markdown](https://github.com/your-org/ds-markdown) 提供 Mermaid 图表渲染功能的 React 插件。
+一个为 [ds-markdown](https://github.com/onshinpei/ds-markdown) 提供 Mermaid 图表渲染功能的 React 插件。
 
 ## ✨ 特性
 
@@ -191,89 +191,6 @@ import plugin from 'ds-markdown-mermaid-plugin';
 
 ```tsx
 import { MermaidBlock } from 'ds-markdown-mermaid-plugin';
-```
-
-### Mermaid 配置选项
-
-通过 `ConfigProvider` 的 `mermaidConfig` 属性可以配置 Mermaid：
-
-```tsx
-const mermaidConfig = {
-  // 主题设置
-  theme: 'default' | 'dark' | 'forest' | 'neutral',
-
-  // 流程图配置
-  flowchart: {
-    useMaxWidth: boolean,
-    htmlLabels: boolean,
-    curve: 'basis' | 'linear' | 'cardinal' | 'step',
-  },
-
-  // 序列图配置
-  sequence: {
-    useMaxWidth: boolean,
-    diagramMarginX: number,
-    diagramMarginY: number,
-    actorMargin: number,
-    width: number,
-    height: number,
-    boxMargin: number,
-    boxTextMargin: number,
-    noteMargin: number,
-    messageMargin: number,
-    mirrorActors: boolean,
-    bottomMarginAdj: number,
-    useMaxWidth: boolean,
-    rightAngles: boolean,
-    showSequenceNumbers: boolean,
-    actorFontSize: number,
-    actorFontFamily: string,
-    actorFontWeight: number,
-    noteFontSize: number,
-    noteFontFamily: string,
-    noteFontWeight: number,
-    noteAlign: string,
-    messageFontSize: number,
-    messageFontFamily: string,
-    messageFontWeight: number,
-    wrap: boolean,
-    wrapPadding: number,
-    labelBoxWidth: number,
-    labelBoxHeight: number,
-  },
-
-  // 甘特图配置
-  gantt: {
-    titleTopMargin: number,
-    barHeight: number,
-    barGap: number,
-    topPadding: number,
-    leftPadding: number,
-    gridLineStartPadding: number,
-    fontSize: number,
-    fontFamily: string,
-    numberSectionStyles: number,
-    axisFormat: string,
-    topAxis: boolean,
-  },
-
-  // 类图配置
-  class: {
-    useMaxWidth: boolean,
-    htmlLabels: boolean,
-  },
-
-  // 饼图配置
-  pie: {
-    useWidth: number,
-  },
-
-  // 状态图配置
-  state: {
-    useMaxWidth: boolean,
-    htmlLabels: boolean,
-  },
-};
 ```
 
 ## 📝 完整示例

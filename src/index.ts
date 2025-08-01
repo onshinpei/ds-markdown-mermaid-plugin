@@ -1,3 +1,5 @@
+import plugin from './plugin';
+
 export type { MermaidProps, MermaidState } from './types';
 
 // 导出MermaidBlock组件
@@ -12,3 +14,5 @@ export { default as MermaidService } from './mermaidService';
 
 // 导出mermaid实例，方便用户直接使用
 export { default as mermaid } from 'mermaid';
+
+export default plugin;
