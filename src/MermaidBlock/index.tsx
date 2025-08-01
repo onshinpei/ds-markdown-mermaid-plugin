@@ -8,6 +8,7 @@ import { GraphProvider } from './context';
 import { PanZoomState } from '../panZoomState';
 
 const MermaidBlock: React.FC<MermaidProps> = (props) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const { code, isComplete = false } = props;
   const [activeSegmented, setActiveSegmented] = useState('mermaid');
   const renderGraphRef = useRef<RenderGraphRef>(null);
@@ -38,7 +39,7 @@ const MermaidBlock: React.FC<MermaidProps> = (props) => {
             />
             {activeSegmented === 'mermaid' ? (
               <div className="md-code-block-header-actions" style={{ gap: 0 }}>
-                <MermaidBlockActions graphRef={renderGraphRef} code={code} />{' '}
+                <MermaidBlockActions graphRef={renderGraphRef} code={code} isFullscreen={isFullscreen} onExitFullscreen={() => setIsFullscreen(false)} />
               </div>
             ) : (
               <CodeBlockActions codeContent={code} language="mermaid" />

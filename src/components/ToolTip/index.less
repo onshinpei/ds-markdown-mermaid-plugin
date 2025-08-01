@@ -50,3 +50,30 @@
   border-top-color: #333;
   border-bottom: none;
 }
+
+// Bottom arrow
+.ds-markdown-tooltip.rc-tooltip-placement-bottom .rc-tooltip-arrow {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  border-bottom-color: #333;
+  border-top: none;
+}
+
+// Left arrow
+.ds-markdown-tooltip.rc-tooltip-placement-left .rc-tooltip-arrow {
+  right: -5px;
+  top: 50%;
+  transform: translateX(100%) translateY(-50%);
+  border-left-color: #333;
+  border-right: none;
+}
+
+// Right arrow
+.ds-markdown-tooltip.rc-tooltip-placement-right .rc-tooltip-arrow {
+  left: -5px;
+  top: 50%;
+  transform: translateX(-100%) translateY(-50%);
+  border-right-color: #333;
+  border-left: none;
+}

@@ -23,7 +23,7 @@ const ToolTip = forwardRef<TooltipRef, ToolTipProps>(({ title, children, positio
         root: classNames('ds-markdown-tooltip', className),
       }}
       trigger={['hover', 'focus']}
-      destroyOnHidden={false}
+      destroyOnHidden={true}
       showArrow={true}
       ref={ref}
       {...rest}

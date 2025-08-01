@@ -38,7 +38,6 @@ export const GraphProvider: React.FC<{
   children: React.ReactNode;
   panZoomState: PanZoomState;
   svgHeight: number;
-  isFullscreen: boolean;
 }> = ({ isComplete, children, panZoomState, svgHeight }) => {
   const [state, dispatch] = useReducer(reducer, {});
 

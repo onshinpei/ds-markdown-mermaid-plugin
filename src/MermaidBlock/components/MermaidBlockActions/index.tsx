@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DownloadIcon, DownScaleIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
+import { CloseIcon, DownloadIcon, DownScaleIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
 import { IconButton, Button, useLocale } from 'ds-markdown';
 
 import { RenderGraphRef } from '../../RenderGraph';
@@ -56,9 +56,15 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
 
       <div className="md-code-block-header-actions-divider" style={{ width: 1, height: 14, backgroundColor: 'var(--dsr-border-1)', marginLeft: 12, marginRight: 12 }} />
 
-      <Button icon={<DownloadIcon size={24} />} style={{ fontSize: 13, padding: '0 4px' }} disabled={!isComplete} onClick={handleDownload}>
-        {locale?.mermaid?.download || 'Download'}
-      </Button>
+      {isFullscreen ? (
+        <>
+          <IconButton icon={<CloseIcon size={24} />} onClick={onExitFullscreen} />
+        </>
+      ) : (
+        <Button icon={<DownloadIcon size={24} />} style={{ fontSize: 13, padding: '0 4px' }} disabled={!isComplete} onClick={handleDownload}>
+          {locale?.mermaid?.download || 'Download'}
+        </Button>
+      )}
     </>
   );
 };

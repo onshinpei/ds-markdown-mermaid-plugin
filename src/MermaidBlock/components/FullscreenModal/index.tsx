@@ -67,7 +67,7 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
             </SuccessButton>
           </div>
           <div className="mermaid-fullscreen__header-right">
-            <MermaidBlockActions graphRef={renderGraphRef} code={code} isFullscreen={true} />
+            <MermaidBlockActions graphRef={renderGraphRef} code={code} isFullscreen={true} onExitFullscreen={onClose} />
           </div>
         </div>
         <div className="mermaid-fullscreen__content" ref={contentRef}>
