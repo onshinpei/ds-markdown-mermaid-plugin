@@ -65,7 +65,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
         jsxs,
         passKeys: true, // 保留所有属性
         components: {
-          svg: Svg,
+          svg: Svg as any,
         },
       });
       return jsxElement;

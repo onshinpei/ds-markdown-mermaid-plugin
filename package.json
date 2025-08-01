@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && rollup -c",
+    "build:less": "lessc src/style.less dist/style.css",
     "dev": "vite",
     "preview": "vite preview",
     "build:demo": "rimraf docs && vite build",
@@ -41,8 +42,11 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
+    "@rc-component/tooltip": "^1.2.0",
+    "classnames": "^2.5.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "mermaid": "^11.9.0",
+    "rc-tooltip": "^6.4.0",
     "rehype-parse": "^9.0.1",
     "rehype-stringify": "^10.0.1",
     "svg-pan-zoom": "^3.6.2",

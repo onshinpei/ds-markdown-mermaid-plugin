@@ -38,12 +38,9 @@ export const GraphProvider: React.FC<{
   children: React.ReactNode;
   panZoomState: PanZoomState;
   svgHeight: number;
+  isFullscreen: boolean;
 }> = ({ isComplete, children, panZoomState, svgHeight }) => {
   const [state, dispatch] = useReducer(reducer, {});
-
-  const setSvgHeight = useCallback((height: number) => {
-    dispatch({ type: ActionType.SET_SVG_HEIGHT, payload: height });
-  }, []);
 
   const contextValue = useMemo(() => ({ isComplete, panZoomState, svgHeight, ...state, methods: {} }), [isComplete, panZoomState, svgHeight, state]);
   return <GraphContext.Provider value={contextValue}>{children}</GraphContext.Provider>;

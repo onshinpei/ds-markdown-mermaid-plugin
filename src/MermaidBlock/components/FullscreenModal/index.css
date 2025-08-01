@@ -13,6 +13,7 @@
 .mermaid-fullscreen__header {
   height: 48px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 .mermaid-fullscreen__header-center {
@@ -21,6 +22,18 @@
   gap: 8px;
   height: 100%;
   justify-content: center;
+}
+
+.mermaid-fullscreen__header-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 16px;
+  line-height: 0;
 }
 
 .mermaid-fullscreen__content {
