@@ -1,12 +1,15 @@
-import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState, useContext } from 'react';
 import MermaidService from '../../mermaidService';
 import { useConfig } from 'ds-markdown';
 import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
+import { toJsxRuntime, Components, ExtraProps } from 'hast-util-to-jsx-runtime';
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
-import uniqueID from 'lodash-es/uniqueId';
 import { MermaidConfig } from 'mermaid';
+import { getMermaidId } from './util';
+import Svg from '../components/Svg';
+import GraphContext from '../context';
+import { svgToPngAndCopy, downloadPng } from '../utils/svgUtil';
 
 const defaultConfig: MermaidConfig = {
   startOnLoad: false,
@@ -14,26 +17,26 @@ const defaultConfig: MermaidConfig = {
 
 interface RenderGraphProps {
   code: string;
+  isComplete?: boolean;
 }
 
 export interface RenderGraphRef {
-  update: (code: string) => void;
+  download: () => Promise<boolean>;
+  copy: () => Promise<boolean>;
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const config = useConfig();
   const mermaidConfig = config.mermaidConfig || defaultConfig;
-
-  console.log(mermaidConfig);
+  const { svgHeight, panZoomState } = useContext(GraphContext);
+  const svgIdRef = useRef('');
 
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
   mermaidConfigRef.current = mermaidConfig;
 
-  // 生成唯一ID
   // 获取 mermaid 服务实例
   const mermaidService = MermaidService.getInstance();
 
@@ -49,7 +52,7 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
     };
 
     initMermaid();
-  }, []);
+  }, [mermaidConfig.theme]);
 
   const parseSvgToJsx = useCallback((svgString: string) => {
     if (!svgString) return null;
@@ -61,7 +64,9 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
         jsx,
         jsxs,
         passKeys: true, // 保留所有属性
-        components: {},
+        components: {
+          svg: Svg as any,
+        },
       });
       return jsxElement;
     } catch (err) {
@@ -73,42 +78,51 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   useEffect(() => {
     if (!code.trim()) {
       setSvgElement(null);
-      setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
     setError(null);
-
     const renderChart = async () => {
-      const chartId = uniqueID('mermaid-');
+      // 生成唯一ID
+      const viewID = getMermaidId();
       try {
         await mermaidService.parse(code);
-        const { svg } = await mermaidService.render(chartId, code);
+        const { svg } = await mermaidService.render(viewID, code);
         const svgElement = parseSvgToJsx(svg);
         if (!svgElement) {
           return;
         }
         setSvgElement(svgElement);
+        svgIdRef.current = `#${viewID}`;
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to render mermaid chart';
         setError(errorMessage);
-      } finally {
-        setIsLoading(false);
       }
     };
     renderChart();
   }, [code]);
 
   useImperativeHandle(ref, () => ({
-    update: (code: string) => {
-      console.log('update', code);
+    download: async () => {
+      const sizes = panZoomState.getSizes();
+      return downloadPng({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
+    },
+    copy: async () => {
+      const sizes = panZoomState.getSizes();
+      return svgToPngAndCopy({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
     },
   }));
 
   return (
     <div className={`react-markdown-mermaid`}>
-      <div className="react-markdown-mermaid__instance">{svgElement}</div>
+      <div
+        className="react-markdown-mermaid__instance"
+        style={{
+          height: svgHeight,
+        }}
+      >
+        {svgElement}
+      </div>
     </div>
   );
 });

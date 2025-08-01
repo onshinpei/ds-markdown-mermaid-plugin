@@ -1,3 +1,5 @@
+import { DownloadIcon, CopyIcon } from 'ds-markdown';
+
 const DownScaleIcon: React.FC<{ size: number }> = ({ size }) => {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,30 +22,12 @@ const UpScaleIcon: React.FC<{ size: number }> = ({ size }) => {
   );
 };
 
-const DownloadIcon: React.FC<{ size: number }> = ({ size }) => {
+const FullScreenIcon: React.FC<{ size: number }> = ({ size }) => {
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.55a.97.97 0 0 1 .982.956v13.04a.97.97 0 0 1-.982.957.97.97 0 0 1-.982-.956V3.507A.97.97 0 0 1 12 2.55z" fill="currentColor"></path>
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M19.418 9.808c.382.375.37.971-.027 1.332l-6.7 6.085a1.04 1.04 0 0 1-1.41-.025.905.905 0 0 1 .027-1.332l6.7-6.085a1.04 1.04 0 0 1 1.41.025z"
-        fill="currentColor"
-      ></path>
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M4.582 9.808a1.04 1.04 0 0 1 1.41-.025l6.7 6.085c.397.361.409.957.027 1.332a1.04 1.04 0 0 1-1.41.025l-6.7-6.085a.905.905 0 0 1-.027-1.332z"
-        fill="currentColor"
-      ></path>
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M3.068 16.46a.97.97 0 0 1 .983.956v1.739c0 .432.36.782.803.782h14.291c.445 0 .804-.35.804-.782v-1.739a.97.97 0 0 1 .983-.956.97.97 0 0 1 .982.956v1.739c0 1.488-1.24 2.695-2.769 2.695H4.855c-1.53 0-2.77-1.207-2.77-2.695v-1.739a.97.97 0 0 1 .983-.956z"
-        fill="currentColor"
-      ></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="none" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M22 3v7a1 1 0 1 1-2 0V4h-6a1 1 0 1 1 0-2h7a1 1 0 0 1 1 1M11.005 21a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-7a1 1 0 0 1 2.002 0v6h6.003a1 1 0 0 1 1 1"></path>
     </svg>
   );
 };
 
-export { DownScaleIcon, UpScaleIcon, DownloadIcon };
+export { DownScaleIcon, UpScaleIcon, DownloadIcon, FullScreenIcon, CopyIcon };

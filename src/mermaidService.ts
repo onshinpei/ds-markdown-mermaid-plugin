@@ -56,12 +56,7 @@ class MermaidService {
    * @returns Promise<{ svg: string }>
    */
   public async render(id: string, code: string): Promise<{ svg: string }> {
-    // if (!this.isInitialized) {
-    //   await this.initialize();
-    // }
-    mermaid.initialize({
-      theme: 'default',
-    });
+    await this.initialize();
     return mermaid.render(id, code);
   }
 
