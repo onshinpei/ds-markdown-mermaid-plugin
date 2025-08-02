@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/MermaidBlock/components/FullscreenModal/index.tsx"],"names":[],"mappings":"AAAA,OAAO,KAA6E,MAAM,OAAO,CAAC;AASlG,OAAO,aAAa,CAAC;AAErB,UAAU,eAAe;IACvB,IAAI,EAAE,MAAM,CAAC;IACb,OAAO,CAAC,EAAE,MAAM,IAAI,CAAC;CACtB;AAED,QAAA,MAAM,eAAe,EAAE,KAAK,CAAC,EAAE,CAAC,eAAe,CAiE9C,CAAC;AAEF,eAAe,eAAe,CAAC"}

@@ -1,0 +1,21 @@
+.mermaid-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mermaid-loading__svg {
+  transform-origin: center;
+  animation: mermaid-loading-rotate 1s linear infinite;
+}
+
+@keyframes mermaid-loading-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

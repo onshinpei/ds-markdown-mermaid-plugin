@@ -2,10 +2,26 @@ const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
 const { dts } = require('rollup-plugin-dts');
+const css = require('rollup-plugin-css-only');
+const less = require('rollup-plugin-less');
 
 const packageJson = require('./package.json');
 
-const external = ['react', 'react-dom', 'mermaid', 'unified', 'unist-util-visit', 'react/jsx-runtime', 'ds-markdown', 'hast-util-to-jsx-runtime', 'lodash-es', 'rehype-parse'];
+const external = [
+  'react',
+  'react-dom',
+  'mermaid',
+  'unified',
+  'unist-util-visit',
+  'react/jsx-runtime',
+  'ds-markdown',
+  'hast-util-to-jsx-runtime',
+  'lodash-es',
+  'rehype-parse',
+  'svg-pan-zoom',
+  'classnames',
+  '@rc-component/tooltip',
+];
 
 module.exports = [
   // 主包构建
@@ -41,6 +57,16 @@ module.exports = [
         declaration: false,
         declarationMap: false,
         emitDeclarationOnly: false,
+      }),
+      // 处理 Less 文件
+      less({
+        output: 'style.css',
+        insert: false,
+        watch: false,
+      }),
+      // 处理 CSS 文件
+      css({
+        output: 'style.css',
       }),
     ],
     external,
