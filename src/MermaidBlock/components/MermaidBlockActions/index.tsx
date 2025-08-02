@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { CloseIcon, DownloadIcon, DownScaleIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
+import { CloseIcon, DownloadIcon, DownScaleIcon, FitIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
 import { IconButton, Button, useLocale } from 'ds-markdown';
 
 import { RenderGraphRef } from '../../RenderGraph';
@@ -27,6 +27,10 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
     panZoomState.zoomOut();
   };
 
+  const fit = () => {
+    panZoomState.fit();
+  };
+
   // 下载图片处理函数
   const handleDownload = async () => {
     if (graphRef.current) {
@@ -49,6 +53,12 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
       <ToolTip title={locale?.mermaid?.zoomIn || 'Zoom In'}>
         <span>
           <IconButton icon={<UpScaleIcon size={24} />} onClick={zoomIn} disabled={!isComplete} />
+        </span>
+      </ToolTip>
+      <div style={{ width: 8 }} />
+      <ToolTip title={locale?.mermaid?.fitInView || 'Fit in view'}>
+        <span>
+          <IconButton icon={<FitIcon size={24} />} onClick={fit} disabled={!isComplete} />
         </span>
       </ToolTip>
       <div style={{ width: 8 }} />

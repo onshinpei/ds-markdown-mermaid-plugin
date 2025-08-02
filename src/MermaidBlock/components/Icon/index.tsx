@@ -41,4 +41,17 @@ const CloseIcon: React.FC<{ size: number }> = ({ size = '1em' }) => {
   );
 };
 
-export { DownScaleIcon, UpScaleIcon, DownloadIcon, FullScreenIcon, CopyIcon, CloseIcon };
+const FitIcon: React.FC<{ size: number }> = ({ size = '1em' }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="none" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M9 3a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v4.5a1 1 0 0 0 2 0V4h4a1 1 0 0 0 1-1m6 0a1 1 0 0 1 1-1h4a2 2 0 0 1 2 2v4.5a1 1 0 1 1-2 0V4h-4a1 1 0 0 1-1-1m1 19a1 1 0 1 1 0-2h4v-4.5a1 1 0 1 1 2 0V20a2 2 0 0 1-2 2zm-7-1a1 1 0 0 1-1 1H4a2 2 0 0 1-2-2v-4.5a1 1 0 1 1 2 0V20h4a1 1 0 0 1 1 1M8 10h8v4H8zm-2 0a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"
+        clip-rule="evenodd"
+      ></path>
+    </svg>
+  );
+};
+
+export { DownScaleIcon, UpScaleIcon, DownloadIcon, FullScreenIcon, CopyIcon, CloseIcon, FitIcon };

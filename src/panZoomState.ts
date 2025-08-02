@@ -114,6 +114,10 @@ export class PanZoomState {
     this.pzoom?.zoomOut();
   }
 
+  public fit() {
+    this.pzoom?.fit();
+  }
+
   public reset() {
     this.pzoom?.reset();
     // 根据配置决定是否自动缩放以避免工具栏重叠
