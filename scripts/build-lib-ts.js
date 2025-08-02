@@ -78,24 +78,30 @@ async function postProcessESM() {
   for (const file of jsFiles) {
     let content = await fs.readFile(file, 'utf8');
 
-    // 修复相对路径导入，确保使用.js扩展名
-    content = content.replace(/from ['"](\.\/[^'"]*|\.\.\/[^'"]*)['"]/g, (match, importPath) => {
+    // 修复相对路径导入，确保使用正确的扩展名
+    content = content.replace(/(?:from|import)\s+['"](\.\/[^'"]*|\.\.\/[^'"]*)['"]/g, (match, importPath) => {
+      // 如果已经有正确的扩展名，直接返回
       if (importPath.endsWith('.js') || importPath.endsWith('.css')) {
         return match;
       }
 
       // 检查是否是目录导入（没有文件扩展名）
-      const importPathWithoutExt = importPath.replace(/\.(js|ts|tsx)$/, '');
+      const importPathWithoutExt = importPath.replace(/\.(js|ts|tsx|less)$/, '');
       const potentialDir = path.join(path.dirname(file), importPathWithoutExt);
       const potentialIndexFile = path.join(potentialDir, 'index.js');
 
       // 如果存在对应的index.js文件，则使用目录导入
       if (fs.existsSync(potentialIndexFile)) {
-        return `from '${importPathWithoutExt}/index.js'`;
+        return match.replace(importPath, `${importPathWithoutExt}/index.js`);
+      }
+
+      // 检查是否是.less文件导入
+      if (importPath.endsWith('.less')) {
+        return match.replace(importPath, importPath.replace('.less', '.css'));
       }
 
       // 否则添加.js扩展名
-      return `from '${importPath}.js'`;
+      return match.replace(importPath, `${importPath}.js`);
     });
 
     await fs.writeFile(file, content, 'utf8');
