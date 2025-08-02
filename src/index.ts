@@ -1,5 +1,8 @@
 import plugin from './plugin';
 
+// 导入样式文件
+import './style.less';
+
 export type { MermaidProps, MermaidState } from './types';
 
 // 导出MermaidBlock组件

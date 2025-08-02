@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DownloadIcon, DownScaleIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
+import { CloseIcon, DownloadIcon, DownScaleIcon, FitIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
 import { IconButton, Button, useLocale } from 'ds-markdown';
 
 import { RenderGraphRef } from '../../RenderGraph';
@@ -27,6 +27,10 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
     panZoomState.zoomOut();
   };
 
+  const fit = () => {
+    panZoomState.fit();
+  };
+
   // 下载图片处理函数
   const handleDownload = async () => {
     if (graphRef.current) {
@@ -52,13 +56,25 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
         </span>
       </ToolTip>
       <div style={{ width: 8 }} />
+      <ToolTip title={locale?.mermaid?.fitInView || 'Fit in view'}>
+        <span>
+          <IconButton icon={<FitIcon size={24} />} onClick={fit} disabled={!isComplete} />
+        </span>
+      </ToolTip>
+      <div style={{ width: 8 }} />
       {!isFullscreen && <FullscreenBtn code={code} />}
 
       <div className="md-code-block-header-actions-divider" style={{ width: 1, height: 14, backgroundColor: 'var(--dsr-border-1)', marginLeft: 12, marginRight: 12 }} />
 
-      <Button icon={<DownloadIcon size={24} />} style={{ fontSize: 13, padding: '0 4px' }} disabled={!isComplete} onClick={handleDownload}>
-        {locale?.mermaid?.download || 'Download'}
-      </Button>
+      {isFullscreen ? (
+        <>
+          <IconButton icon={<CloseIcon size={24} />} onClick={onExitFullscreen} />
+        </>
+      ) : (
+        <Button icon={<DownloadIcon size={24} />} style={{ fontSize: 13, padding: '0 4px' }} disabled={!isComplete} onClick={handleDownload}>
+          {locale?.mermaid?.download || 'Download'}
+        </Button>
+      )}
     </>
   );
 };

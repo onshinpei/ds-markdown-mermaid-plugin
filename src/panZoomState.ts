@@ -43,7 +43,7 @@ export class PanZoomState {
       zoomEnabled: true,
       controlIconsEnabled: false,
       dblClickZoomEnabled: true,
-      preventMouseEventsDefault: false,
+      preventMouseEventsDefault: true,
       mouseWheelZoomEnabled: this.mouseWheelZoomEnabled,
 
       maxZoom: 12,
@@ -112,6 +112,10 @@ export class PanZoomState {
 
   public zoomOut() {
     this.pzoom?.zoomOut();
+  }
+
+  public fit() {
+    this.pzoom?.fit();
   }
 
   public reset() {

@@ -8,6 +8,7 @@ my-mermaid-tmp/
 # Build outputs
 dist/
 build/
+es/
 
 # Environment variables
 .env

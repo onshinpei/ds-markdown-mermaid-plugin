@@ -45,6 +45,7 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
     if (renderGraphRef.current) {
       return renderGraphRef.current.download();
     }
+    return false;
   };
 
   // 复制图片处理函数
@@ -52,10 +53,11 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
     if (renderGraphRef.current) {
       return renderGraphRef.current.copy();
     }
+    return false;
   };
 
   const el = (
-    <GraphProvider isComplete={true} panZoomState={panZoomState} svgHeight={height} isFullscreen={true}>
+    <GraphProvider isComplete={true} panZoomState={panZoomState} svgHeight={height}>
       <div className="ds-markdown mermaid-fullscreen">
         <div className="mermaid-fullscreen__header">
           <div className="mermaid-fullscreen__header-center">
@@ -67,7 +69,7 @@ const FullscreenModal: React.FC<FullscreenProps> = ({ code, onClose }) => {
             </SuccessButton>
           </div>
           <div className="mermaid-fullscreen__header-right">
-            <MermaidBlockActions graphRef={renderGraphRef} code={code} isFullscreen={true} />
+            <MermaidBlockActions graphRef={renderGraphRef} code={code} isFullscreen={true} onExitFullscreen={onClose} />
           </div>
         </div>
         <div className="mermaid-fullscreen__content" ref={contentRef}>

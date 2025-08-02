@@ -1,10 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // 检查是否安装了less
 let less;
 try {
-  less = require('less');
+  less = await import('less');
 } catch (error) {
   console.error('❌ Error: less package is not installed. Please install it first:');
   console.error('npm install --save-dev less');
@@ -47,7 +52,7 @@ async function processImports(cssContent, baseDir) {
 // 编译LESS内容
 async function compileLess(lessContent) {
   try {
-    const result = await less.render(lessContent, {
+    const result = await less.default.render(lessContent, {
       compress: false,
       sourceMap: false,
     });
