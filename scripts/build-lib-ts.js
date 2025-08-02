@@ -83,6 +83,18 @@ async function postProcessESM() {
       if (importPath.endsWith('.js') || importPath.endsWith('.css')) {
         return match;
       }
+
+      // 检查是否是目录导入（没有文件扩展名）
+      const importPathWithoutExt = importPath.replace(/\.(js|ts|tsx)$/, '');
+      const potentialDir = path.join(path.dirname(file), importPathWithoutExt);
+      const potentialIndexFile = path.join(potentialDir, 'index.js');
+
+      // 如果存在对应的index.js文件，则使用目录导入
+      if (fs.existsSync(potentialIndexFile)) {
+        return `from '${importPathWithoutExt}/index.js'`;
+      }
+
+      // 否则添加.js扩展名
       return `from '${importPath}.js'`;
     });
 
