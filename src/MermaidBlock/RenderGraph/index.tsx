@@ -23,6 +23,7 @@ interface RenderGraphProps {
 export interface RenderGraphRef {
   download: () => Promise<boolean>;
   copy: () => Promise<boolean>;
+  getSvg: () => SVGElement | null;
 }
 
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
@@ -110,6 +111,9 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
     copy: async () => {
       const sizes = panZoomState.getSizes();
       return svgToPngAndCopy({ id: svgIdRef.current, width: sizes?.width || 0, height: sizes?.height || 0 });
+    },
+    getSvg: () => {
+      return document.querySelector(svgIdRef.current) as SVGElement | null;
     },
   }));
 
