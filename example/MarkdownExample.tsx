@@ -1,8 +1,8 @@
 import React from 'react';
 import { ConfigProvider, Markdown } from 'ds-markdown';
 import en from 'ds-markdown/i18n/en';
-// import plugin from '../src/plugin';
-import plugin from 'ds-markdown-mermaid-plugin';
+import plugin from '../src/plugin';
+// import plugin from 'ds-markdown-mermaid-plugin';
 import 'ds-markdown/style.css';
 
 import markdownContent from './markdown.md?raw';
@@ -11,6 +11,7 @@ const MarkdownExample: React.FC = () => {
   // 配置mermaid
   const mermaidConfig = {
     theme: 'light',
+    // headerActions: false,
   };
 
   return (

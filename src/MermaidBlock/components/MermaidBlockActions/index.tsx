@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { CloseIcon, DownloadIcon, DownScaleIcon, FitIcon, FullScreenIcon, UpScaleIcon } from '../Icon';
-import { IconButton, Button, useLocale } from 'ds-markdown';
+import { IconButton, Button, useLocale, useConfig } from 'ds-markdown';
 
 import { RenderGraphRef } from '../../RenderGraph';
 import GraphContext, { GraphProvider } from '../../context';
@@ -17,6 +17,9 @@ interface MermaidBlockActionsProps {
 
 const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRef, onExitFullscreen, isFullscreen }) => {
   const locale = useLocale();
+  const config = useConfig();
+
+  const showMermaidActions = config.mermaidConfig?.headerActions;
   const { panZoomState, isComplete } = useContext(GraphContext);
 
   const zoomIn = () => {
@@ -41,6 +44,16 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
       }
     }
   };
+
+  if (showMermaidActions === false) {
+    return null;
+  }
+
+  if (typeof showMermaidActions === 'function') {
+    return showMermaidActions({
+      graphSvg: graphRef.current?.getSvg()!,
+    });
+  }
 
   return (
     <>
