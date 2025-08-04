@@ -4,7 +4,7 @@
 
 [DEMO](https://stackblitz.com/edit/vitejs-vite-iqbyta3j?file=README.md)
 
-[预览](./assets//images//mermaid.gif)
+![预览](./assets//images//mermaid.gif)
 
 ## ✨ 特性
 
