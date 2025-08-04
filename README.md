@@ -2,6 +2,10 @@
 
 一个为 [ds-markdown](https://github.com/onshinpei/ds-markdown) 提供 Mermaid 图表渲染功能的 React 插件。
 
+[DEMO](https://stackblitz.com/edit/vitejs-vite-iqbyta3j?file=README.md)
+
+[预览](./assets//images//mermaid.gif)
+
 ## ✨ 特性
 
 - 🎯 **简单易用** - 作为 ds-markdown 的插件，轻松集成
