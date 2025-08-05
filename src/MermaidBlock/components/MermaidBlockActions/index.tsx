@@ -51,7 +51,7 @@ const MermaidBlockActions: React.FC<MermaidBlockActionsProps> = ({ code, graphRe
 
   if (typeof showMermaidActions === 'function') {
     return showMermaidActions({
-      graphSvg: graphRef.current?.getSvg()!,
+      graphSvg: graphRef.current?.getSvg() as SVGElement,
     });
   }
 
