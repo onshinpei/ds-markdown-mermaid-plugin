@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import type { MermaidConfig } from 'mermaid';
