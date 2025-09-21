@@ -1,13 +1,8 @@
-import React, { memo, useCallback, useEffect, useImperativeHandle, forwardRef, useRef, useState, useContext } from 'react';
+import React, { memo, useEffect, useImperativeHandle, forwardRef, useRef, useState, useContext } from 'react';
 import MermaidService from '../../mermaidService';
 import { useConfig } from 'ds-markdown';
-import { unified } from 'unified';
-import rehypeParse from 'rehype-parse';
-import { toJsxRuntime, Components, ExtraProps } from 'hast-util-to-jsx-runtime';
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 import { MermaidConfig } from 'mermaid';
-import { getMermaidId } from './util';
-import Svg from '../components/Svg';
+import { getMermaidId, parseSvgToJsx } from './util';
 import GraphContext from '../context';
 import { svgToPngAndCopy, downloadPng } from '../utils/svgUtil';
 
@@ -26,6 +21,9 @@ export interface RenderGraphRef {
   getSvg: () => SVGElement | null;
 }
 
+// 获取 mermaid 服务实例
+const mermaidService = MermaidService.getInstance();
+
 const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code }, ref) => {
   const [svgElement, setSvgElement] = useState<React.ReactElement | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -37,9 +35,6 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
   // 去除useEffect依赖，避免重复初始化
   const mermaidConfigRef = useRef(mermaidConfig);
   mermaidConfigRef.current = mermaidConfig;
-
-  // 获取 mermaid 服务实例
-  const mermaidService = MermaidService.getInstance();
 
   useEffect(() => {
     const initMermaid = async () => {
@@ -54,27 +49,6 @@ const RenderGraphInner = forwardRef<RenderGraphRef, RenderGraphProps>(({ code },
 
     initMermaid();
   }, [mermaidConfig.theme]);
-
-  const parseSvgToJsx = useCallback((svgString: string) => {
-    if (!svgString) return null;
-    try {
-      const processor = unified().use(rehypeParse, { fragment: true, space: 'svg' });
-      const hast = processor.parse(svgString);
-      const jsxElement = toJsxRuntime(hast, {
-        Fragment,
-        jsx,
-        jsxs,
-        passKeys: true, // 保留所有属性
-        components: {
-          svg: Svg as any,
-        },
-      });
-      return jsxElement;
-    } catch (err) {
-      console.error('Failed to parse SVG to JSX:', err);
-      return null;
-    }
-  }, []);
 
   useEffect(() => {
     if (!code.trim()) {
