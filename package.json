@@ -1,6 +1,6 @@
 {
   "name": "ds-markdown-mermaid-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "A React component for rendering Mermaid diagrams",
   "main": "./es/index.js",
@@ -37,7 +37,7 @@
   "author": "Your Name",
   "license": "MIT",
   "peerDependencies": {
-    "ds-markdown": "^0.2.0",
+    "ds-markdown": ">=0.2.0-0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
