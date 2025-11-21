@@ -17,7 +17,7 @@ const ToolTip = forwardRef<TooltipRef, ToolTipProps>(({ title, children, positio
   return (
     <RcTooltip
       placement={position}
-      overlay={title}
+      overlay={<div className="rc-tooltip-inner">{title}</div>}
       mouseLeaveDelay={0}
       classNames={{
         root: classNames('ds-markdown-tooltip', className),

@@ -1,10 +1,8 @@
 import React from 'react';
 import { ConfigProvider, Markdown } from 'ds-markdown';
 import en from 'ds-markdown/i18n/en';
-// import plugin from '../src/plugin';
-import plugin from 'ds-markdown-mermaid-plugin';
-import 'ds-markdown/style.css';
-
+import plugin from '../src/plugin';
+// import plugin from 'ds-markdown-mermaid-plugin';
 import markdownContent from './markdown.md?raw';
 
 const MarkdownExample: React.FC = () => {
@@ -18,7 +16,7 @@ const MarkdownExample: React.FC = () => {
     <ConfigProvider mermaidConfig={mermaidConfig} locale={en}>
       <div className="markdown-example">
         <div className="markdown-container">
-          <Markdown interval={16} plugins={[plugin]} timerType="setTimeout" disableTyping={false} theme="light">
+          <Markdown interval={5} plugins={[plugin]} timerType="setTimeout" disableTyping={false} theme="light">
             {markdownContent}
           </Markdown>
         </div>
