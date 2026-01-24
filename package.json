@@ -38,7 +38,7 @@
   "author": "Your Name",
   "license": "MIT",
   "peerDependencies": {
-    "ds-markdown": ">=0.2.0-0",
+    "ds-markdown": ">=0.2.0-0 || >=1.0.0-0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
